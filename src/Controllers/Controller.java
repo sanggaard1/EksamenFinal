@@ -27,7 +27,9 @@ public class Controller {
 
         do {
             try {
-                System.out.println("BookIT - Login - BookIT");
+                System.out.println("___________________________");
+                System.out.println("| BookIT - Login - BookIT |");
+                System.out.println("|_________________________|");
                 System.out.println("");
                 System.out.println("Du har nu følgende valgmuligheder:");
                 System.out.println("1. Login som eksisterende bruger");
@@ -37,13 +39,13 @@ public class Controller {
 
                 switch (choice) {
                     case 1:
-                        loginMenu();
+                        mainMenu();
                         break;
                     case 2:
                         createUser();
                         break;
                     default:
-                        System.out.println("Du tastede forkert - pr�v igen.");
+                        System.out.println("Du tastede forkert - prøv igen.");
                         break;
                 }
             } catch (InputMismatchException e) {
@@ -53,35 +55,57 @@ public class Controller {
         } while (true);
 
     }
+
     // Menu der møder bruger - efter man er logget ind med gyldigt username og password
-    public void loginMenu() {
+    public void mainMenu() {
 
         String username, password;
-        System.out.println("BookIT - Login - BookIT");
-        System.out.println("Indtast Brugernavn");
+        System.out.println("Login");
+        System.out.println("indtast username");
         username = input.nextLine();
-        System.out.println("Indtast kodeord");
+        System.out.println("Iindtast password");
         password = input.nextLine();
 
         String token = Connection.authorizeLogin(username, password);
         if (token != null) {
             do {
-                System.out.println("Welcome - Du har nu følgende valgmuligheder");
-                System.out.println("1) Print en bog");
-                System.out.println("2) Print alle bøger");
-                switch (input.nextInt()) {
-                    case 1:
-                        printBook();
-                        break;
-                    case 2:
-                        printBooks();
-                        break;
-                    default:
-                        System.out.println("Indtast enten 1 eller 2");
+                try {
+                    System.out.println("Book & Curriculum service");
+                    System.out.println("1. Print en bog");
+                    System.out.println("2. Print alle bøger");
+                    System.out.println("3. Print et pensum");
+                    System.out.println("4. Ændre brugeroplysninger");
+                    System.out.println("5. Slet bruger");
+                    System.out.println("6. Log ud");
+                    switch (input.nextInt()) {
+                        case 1:
+                            printBook();
+                            break;
+                        case 2:
+                            printBooks();
+                            break;
+                        case 3:
+                            printCurriculum();
+                            break;
+                        case 4:
+                            changeUser();
+                            break;
+                        case 5:
+                            deleteUser();
+                            break;
+                        case 6:
+                            logout();
+                            break;
+                        default:
+                            System.out.println("Du tastede forkert - prøv igen.");
+                            break;
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Indtast venligt et tal (1-9)");
+                    input.next();
                 }
-            } while (true);//Brug noget andet en true. CurrentUser != null
-        } else {
-            System.out.println("user pas fejl");
+            } while (true);
+
         }
 
     }
@@ -105,4 +129,20 @@ public class Controller {
 
     }
 
+    public void printCurriculum() {
+        System.out.println("Not implementet");
+
+    }
+
+    public void changeUser() {
+        System.out.println("Not implementet");
+
+    }
+
+    public void deleteUser() {
+        System.out.println("Not implementet");
+    }
+    public void logout() {
+        System.out.println("Not implementet");
+}
 }
