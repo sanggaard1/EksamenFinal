@@ -48,7 +48,6 @@ public class Controller {
             System.out.println("user pas fejl");
         }
 
-
     }
 
     public void printBooks(){
