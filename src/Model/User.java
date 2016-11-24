@@ -16,7 +16,7 @@ public class User {
     public User(){
 
     }
-    // Construktur
+    //Constructor
     public User(String firstName, String lastName, String userName, String email, String password, Boolean userType) {
         this.firstName = firstName;
         this.lastName = lastName;
