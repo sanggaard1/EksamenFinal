@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
         Config.initConfig();
 
-        new Controller().menu();
+        new Controller().preMenu();
 
     }
 }
