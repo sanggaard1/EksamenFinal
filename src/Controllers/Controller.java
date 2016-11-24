@@ -1,6 +1,8 @@
 package Controllers;
 
 import Model.Book;
+import Model.User;
+import Model.Curriculum;
 import SDK.Connection;
 
 import java.util.ArrayList;
@@ -61,15 +63,16 @@ public class Controller {
 
         String username, password;
         System.out.println("Login");
-        System.out.println("indtast username");
+        System.out.println("Indtast brugernavn");
         username = input.nextLine();
-        System.out.println("Iindtast password");
+        System.out.println("Indtast kodeord");
         password = input.nextLine();
 
         String token = Connection.authorizeLogin(username, password);
         if (token != null) {
             do {
                 try {
+                    System.out.println("");
                     System.out.println("Book & Curriculum service");
                     System.out.println("1. Print en bog");
                     System.out.println("2. Print alle bøger");
