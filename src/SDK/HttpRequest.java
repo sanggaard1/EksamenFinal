@@ -21,7 +21,6 @@ public class HttpRequest {
             WebResource webResource = client
                     .resource("http://localhost:8080/server2_0_war_exploded/")
 
-//                    .resource(Config.getServerUrl())//det kommer fra config
                     .path(path); //book
 
             clientResponse = webResource.accept("application/json").get(ClientResponse.class);
@@ -37,7 +36,6 @@ public class HttpRequest {
             WebResource webResource = client
                     .resource("http://localhost:8080/server2_0_war_exploded/")
 
-//                    .resource(Config.getServerUrl())//det kommer fra config
                     .path(path); //book
 
             clientResponse = webResource.accept("application/json").post(ClientResponse.class, json);

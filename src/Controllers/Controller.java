@@ -4,6 +4,7 @@ import Model.Book;
 import Model.User;
 import Model.Curriculum;
 import SDK.Connection;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -74,18 +75,18 @@ public class Controller {
                 try {
                     System.out.println("");
                     System.out.println("Book & Curriculum service");
-                    System.out.println("1. Print en bog");
-                    System.out.println("2. Print alle bøger");
+                    System.out.println("1. Print alle bøger");
+                    System.out.println("2. Print en bog");
                     System.out.println("3. Print et pensum");
                     System.out.println("4. Ændre brugeroplysninger");
                     System.out.println("5. Slet bruger");
                     System.out.println("6. Log ud");
                     switch (input.nextInt()) {
                         case 1:
-                            printBook();
+                            printBooks();
                             break;
                         case 2:
-                            printBooks();
+                            printBook();
                             break;
                         case 3:
                             printCurriculum();
@@ -115,16 +116,34 @@ public class Controller {
 
     public void printBooks() {
         ArrayList<Book> books = Connection.getBooks();
-        System.out.println("Bøger i Biancas bogklub");
+        System.out.println("Her er alle bøgerne:");
         for (Book book : books) {
-            System.out.println("id: " + book.getBookID() + " title: " + book.getTitle());
+            System.out.println("Bog - ID: " + book.getBookID() + " - Titlen: " + book.getTitle());
         }
     }
 
     public void printBook() {
-        System.out.println("Indast id på den ønskede bog");
-        Book book = Connection.getBook(input.nextInt());
-        System.out.println("id: " + book.getBookID() + " title: " + book.getTitle());
+        Scanner input2 = new Scanner(System.in);
+        ArrayList<Book> books = Connection.getBooks();
+        ArrayList<Book> foundBooks = new ArrayList<>();
+
+        System.out.println("Indtast navn på den ønskede bog");
+        String searchTitle = input2.nextLine();
+
+        for (Book book : books){
+            if (book.getTitle() != null && book.getTitle().toLowerCase().contains(searchTitle.toLowerCase())){
+            foundBooks.add(book);
+            System.out.println(foundBooks.indexOf(book) + ". " + book.getTitle());
+            }
+        }
+
+        System.out.println("indtast tal på bog?");
+        int foundBook = input2.nextInt();
+        Book book = foundBooks.get(foundBook);
+        System.out.println(book.getAuthor());
+
+      //  Book book = Connection.getBook(input.nextInt());
+      //  System.out.println("id: " + book.getBookID() + " title: " + book.getTitle());
     }
 
     public void createUser() {

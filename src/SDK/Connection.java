@@ -32,6 +32,7 @@ public class Connection {
         return token;
     }
 
+    //hent alle bøger
     public static ArrayList<Book> getBooks() {
         ClientResponse clientResponse = HttpRequest.get("book/");
         ArrayList<Book> books = null;
@@ -51,6 +52,7 @@ public class Connection {
         return books;
     }
 
+    // hent en bog
     public static Book getBook(int id) {
         ClientResponse clientResponse = HttpRequest.get("book/" + id);
         Book book = null;
@@ -68,5 +70,33 @@ public class Connection {
         }
         return book;
     }
+
+    /*
+
+    public static Book getBook(int id) {
+        ClientResponse clientResponse = HttpRequest.get("book/" + id);
+        Book book = null;
+
+        if (clientResponse == null) {
+            System.out.println("No sdk");
+        } else {
+            String encryptedJson = clientResponse.getEntity(String.class);
+            if (clientResponse.getStatus() == 200) {
+                String decryptedJson = Cryptor.encryptDecryptXOR(encryptedJson);
+                book = new Gson().fromJson(decryptedJson, Book.class);
+            } else {
+                System.out.println("Server error");
+            }
+        }
+        return book;
+
+
+
+
+
+     */
+
+
+
 
 }
