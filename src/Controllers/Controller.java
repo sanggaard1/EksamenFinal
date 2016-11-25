@@ -130,21 +130,25 @@ public class Controller {
         System.out.println("Indtast navn på den ønskede bog");
         String searchTitle = input2.nextLine();
 
-        for (Book book : books){
-            if (book.getTitle() != null && book.getTitle().toLowerCase().contains(searchTitle.toLowerCase())){
-            foundBooks.add(book);
-            System.out.println(foundBooks.indexOf(book) + ". " + book.getTitle());
+        try {
+            for (Book book : books) {
+                if (book.getTitle() != null && book.getTitle().toLowerCase().contains(searchTitle.toLowerCase())) {
+                    foundBooks.add(book);
+                    System.out.println(foundBooks.indexOf(book) + ". " + book.getTitle());
+                }
             }
+            System.out.println("Indtast nummer på bog, som du ønsker info på?");
+            int foundBook = input2.nextInt();
+            Book book = foundBooks.get(foundBook);
+            System.out.println(book.getAuthor()); //indtast priser + diverse info på bøger
+
+        } catch (InputMismatchException e) {
+            System.out.println("Indtast venligt et tal?");
+            input.next();
+
         }
-
-        System.out.println("indtast tal på bog?");
-        int foundBook = input2.nextInt();
-        Book book = foundBooks.get(foundBook);
-        System.out.println(book.getAuthor());
-
-      //  Book book = Connection.getBook(input.nextInt());
-      //  System.out.println("id: " + book.getBookID() + " title: " + book.getTitle());
     }
+
 
     public void createUser() {
         System.out.println("Not implementet");
