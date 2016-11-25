@@ -140,7 +140,8 @@ public class Controller {
             System.out.println("Indtast nummer på bog, som du ønsker info på?");
             int foundBook = input2.nextInt();
             Book book = foundBooks.get(foundBook);
-            System.out.println(book.getAuthor()); //indtast priser + diverse info på bøger
+            System.out.println("Title: " + book.getTitle() + "\n" + "Forfatter: " + book.getAuthor() + "\n" + "Forlag: " + book.getPublisher() + "\n" + "Pris på AB: " + book.getPriceAB()
+                    + "\n" + "Pris på CDON: " + book.getPriceCDON() + "\n" + "Pris på SAXO: " + book.getPriceSAXO() + "\n" ); //indtast priser + diverse info på bøger
 
         } catch (InputMismatchException e) {
             System.out.println("Indtast venligt et tal?");
