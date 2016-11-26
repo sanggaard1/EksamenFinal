@@ -52,7 +52,7 @@ public class Controller {
                         break;
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Indtast venligt et tal (1-9)");
+                System.out.println("Indtast venligst et tal");
                 input.next();
             }
         } while (true);
@@ -76,9 +76,9 @@ public class Controller {
                     System.out.println("");
                     System.out.println("Book & Curriculum service");
                     System.out.println("1. Print alle bøger");
-                    System.out.println("2. Print en bog");
+                    System.out.println("2. Print en bog med unikke oplysninger og priser");
                     System.out.println("3. Print et pensum");
-                    System.out.println("4. Ændre brugeroplysninger");
+                    System.out.println("4. Ændre i personlige brugeroplysninger");
                     System.out.println("5. Slet bruger");
                     System.out.println("6. Log ud");
                     switch (input.nextInt()) {
@@ -98,14 +98,17 @@ public class Controller {
                             deleteUser();
                             break;
                         case 6:
-                            logout();
+                            System.out.println(" ---------------");
+                            System.out.println("  Tak for i dag  ");
+                            System.out.println(" ---------------");
+                            System.exit(0);
                             break;
                         default:
                             System.out.println("Du tastede forkert - prøv igen.");
                             break;
                     }
                 } catch (InputMismatchException e) {
-                    System.out.println("Indtast venligt et tal (1-9)");
+                    System.out.println("Indtast venligst et tal");
                     input.next();
                 }
             } while (true);
@@ -138,9 +141,14 @@ public class Controller {
                     check = true;
                     System.out.println(foundBooks.indexOf(book) + ". " + book.getTitle());
                 }
+            }
+            } catch (InputMismatchException e) {
+                check = true;
+                System.out.println("Indtast venligt et tal?");
+                input.next();
+
 
             }
-
              System.out.println("Indtast nummer på bog, som du ønsker info på?");
             int foundBook = input2.nextInt();
             Book book = foundBooks.get(foundBook);
@@ -148,13 +156,13 @@ public class Controller {
                     + "\n" + "ISBN/Stregkode Nr.: " + book.getISBN() + "\n" + "Forlag: " + book.getPublisher() + "\n" + "Pris på AB: " + book.getPriceAB()
                     + "\n" + "Pris på CDON: " + book.getPriceCDON() + "\n" + "Pris på SAXO: " + book.getPriceSAXO() + "\n" );
 
+/*
         } catch (InputMismatchException e) {
             check = true;
             System.out.println("Indtast venligt et tal?");
             input.next();
-
+*/
         }
-    }
 
 
     public void createUser() {
