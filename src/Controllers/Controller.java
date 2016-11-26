@@ -171,7 +171,13 @@ public class Controller {
     }
 
     public void printCurriculum() {
-        System.out.println("Not implementet");
+        ArrayList<Curriculum> curriculums = Connection.getCurriculums();
+        System.out.println("Her er alle pensumlisterne:");
+        for (Curriculum curriculum : curriculums) {
+            System.out.println("pensumliste ID: " + curriculum.getCurriculumID() + " - Titlen på pensum: " + curriculum.getEducation());
+        }
+
+
 
     }
 

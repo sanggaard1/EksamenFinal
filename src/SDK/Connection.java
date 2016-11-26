@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import com.sun.jersey.api.client.ClientResponse;
 import Model.Book;
 import Model.UserLogin;
+import Model.Curriculum;
 
 import java.util.ArrayList;
 
@@ -71,11 +72,9 @@ public class Connection {
         return book;
     }
 
-    /*
-
-    public static Book getBook(int id) {
-        ClientResponse clientResponse = HttpRequest.get("book/" + id);
-        Book book = null;
+        public static ArrayList<Curriculum> getCurriculums() {
+        ClientResponse clientResponse = HttpRequest.get("curriculum/");
+            ArrayList<Curriculum> curriculums = null;
 
         if (clientResponse == null) {
             System.out.println("No sdk");
@@ -83,20 +82,12 @@ public class Connection {
             String encryptedJson = clientResponse.getEntity(String.class);
             if (clientResponse.getStatus() == 200) {
                 String decryptedJson = Cryptor.encryptDecryptXOR(encryptedJson);
-                book = new Gson().fromJson(decryptedJson, Book.class);
+                curriculums = new Gson().fromJson(decryptedJson, new TypeToken<ArrayList<Curriculum>>() {
+                }.getType());
             } else {
                 System.out.println("Server error");
             }
         }
-        return book;
-
-
-
-
-
-     */
-
-
-
-
+        return curriculums;
+    }
 }
