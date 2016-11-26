@@ -172,10 +172,11 @@ public class Controller {
 
     public void printCurriculum() {
         ArrayList<Curriculum> curriculums = Connection.getCurriculums();
-        System.out.println("Her er alle pensumlisterne:");
+        System.out.println("Her er alle pensumlisterne - Du kan få vist bøgerne på semesteret ved at indtaste det unikke ID:");
         for (Curriculum curriculum : curriculums) {
-            System.out.println("pensumliste ID: " + curriculum.getCurriculumID() + " - Titlen på pensum: " + curriculum.getEducation());
+            System.out.println("ID: " + curriculum.getCurriculumID() + " - " + curriculum.getSchool() + " " + curriculum.getSemester() + ". Semester  " + curriculum.getEducation());
         }
+        System.out.println( "\n" + "Indtast ID for Semester: ");
 
 
 
@@ -188,8 +189,7 @@ public class Controller {
 
     public void deleteUser() {
         System.out.println("Not implementet");
+
     }
-    public void logout() {
-        System.out.println("Not implementet");
-}
+
 }
