@@ -59,6 +59,14 @@ public class Controller {
 
     }
 
+
+
+    public void createUser() {
+        System.out.println("Not implementet");
+    }
+
+
+
     // Menu der møder bruger - efter man er logget ind med gyldigt username og password
     public void mainMenu() {
 
@@ -98,9 +106,7 @@ public class Controller {
                             deleteUser();
                             break;
                         case 6:
-                            System.out.println(" ---------------");
-                            System.out.println("  Tak for i dag  ");
-                            System.out.println(" ---------------");
+                            System.out.println(" Du logges ud - Tak for i dag  ");
                             System.exit(0);
                             break;
                         default:
@@ -129,7 +135,6 @@ public class Controller {
         Scanner input2 = new Scanner(System.in);
         ArrayList<Book> books = Connection.getBooks();
         ArrayList<Book> foundBooks = new ArrayList<>();
-        boolean check = false;
 
         System.out.println("Indtast navn på den ønskede bog");
         String searchTitle = input2.nextLine();
@@ -138,12 +143,10 @@ public class Controller {
             for (Book book : books) {
                 if (book.getTitle() != null && book.getTitle().toLowerCase().contains(searchTitle.toLowerCase())) {
                     foundBooks.add(book);
-                    check = true;
                     System.out.println(foundBooks.indexOf(book) + ". " + book.getTitle());
                 }
             }
             } catch (InputMismatchException e) {
-                check = true;
                 System.out.println("Indtast venligt et tal?");
                 input.next();
 
@@ -164,23 +167,41 @@ public class Controller {
 */
         }
 
-
-    public void createUser() {
-        System.out.println("Not implementet");
-
-    }
-
     public void printCurriculum() {
+        Scanner input = new Scanner(System.in);
         ArrayList<Curriculum> curriculums = Connection.getCurriculums();
+        ArrayList<Curriculum> foundCurriculumBooks = new ArrayList<>();
+
         System.out.println("Her er alle pensumlisterne - Du kan få vist bøgerne på semesteret ved at indtaste det unikke ID:");
-        for (Curriculum curriculum : curriculums) {
-            System.out.println("ID: " + curriculum.getCurriculumID() + " - " + curriculum.getSchool() + " " + curriculum.getSemester() + ". Semester  " + curriculum.getEducation());
+            for (Curriculum curriculum : curriculums) {
+                System.out.println("ID: " + curriculum.getCurriculumID() + " - " + curriculum.getSchool() + " " + curriculum.getSemester() + ". Semester  " + curriculum.getEducation());
+            }
+
+
+            int searchCurriculum;
+        do {
+
+            System.out.println("Indtast ID for Semester: ");
+            while (!input.hasNextInt()) {
+                System.out.println("Indtast venligst et nummer");
+                input.next();
+            }
+            searchCurriculum = input.nextInt();
+
+        } while (searchCurriculum <= 0 || searchCurriculum > curriculums.size());
+
+            ArrayList<Book> curriculumBooks = Connection.getCurriculumBooks(searchCurriculum);
+
+            for (Book book : curriculumBooks) {
+                System.out.println(book.getTitle() + " " + book.getISBN());
+            }
+
+
         }
-        System.out.println( "\n" + "Indtast ID for Semester: ");
 
 
 
-    }
+
 
     public void changeUser() {
         System.out.println("Not implementet");

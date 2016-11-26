@@ -19,7 +19,7 @@ public class HttpRequest {
         ClientResponse clientResponse = null;
         try {
             WebResource webResource = client
-                    .resource("http://localhost:8080/server2_0_war_exploded/")
+                    .resource("http://localhost:8080/server2_0_war_exploded")
 
                     .path(path); //book
 
@@ -34,7 +34,7 @@ public class HttpRequest {
         ClientResponse clientResponse = null;
         try {
             WebResource webResource = client
-                    .resource("http://localhost:8080/server2_0_war_exploded/")
+                    .resource("http://localhost:8080/server2_0_war_exploded")
 
                     .path(path); //book
 

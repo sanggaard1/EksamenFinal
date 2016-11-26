@@ -6,7 +6,7 @@ package Model;
 public class Book {
 
     private int bookID;
-    private double ISBN;
+    private long ISBN;
     private String publisher;
     private String title;
     private String author;
@@ -16,7 +16,7 @@ public class Book {
     private int version;
 
     //Constructor
-    public Book(int bookID, double ISBN, String publisher, String title, String author, double priceAB, double priceSAXO, double priceCDON, int version) {
+    public Book(int bookID, long ISBN, String publisher, String title, String author, double priceAB, double priceSAXO, double priceCDON, int version) {
         this.bookID = bookID;
         this.ISBN = ISBN;
         this.publisher = publisher;
@@ -28,7 +28,7 @@ public class Book {
         this.version = version;
     }
 
-    public Book(double ISBN, String publisher, String title, String author, double priceAB, double priceSAXO, double priceCDON, int version) {
+    public Book(long ISBN, String publisher, String title, String author, double priceAB, double priceSAXO, double priceCDON, int version) {
         this.ISBN = ISBN;
         this.publisher = publisher;
         this.title = title;
@@ -47,11 +47,11 @@ public class Book {
         this.bookID = bookID;
     }
 
-    public double getISBN() {
+    public long getISBN() {
         return ISBN;
     }
 
-    public void setISBN(double ISBN) {
+    public void setISBN(long ISBN) {
         this.ISBN = ISBN;
     }
 

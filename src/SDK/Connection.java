@@ -35,7 +35,7 @@ public class Connection {
 
     //hent alle bøger
     public static ArrayList<Book> getBooks() {
-        ClientResponse clientResponse = HttpRequest.get("book/");
+        ClientResponse clientResponse = HttpRequest.get("/book");
         ArrayList<Book> books = null;
 
         if (clientResponse == null) {
@@ -55,7 +55,7 @@ public class Connection {
 
     // hent en bog
     public static Book getBook(int id) {
-        ClientResponse clientResponse = HttpRequest.get("book/" + id);
+        ClientResponse clientResponse = HttpRequest.get("/book" + id);
         Book book = null;
 
         if (clientResponse == null) {
@@ -72,9 +72,9 @@ public class Connection {
         return book;
     }
 
-        public static ArrayList<Curriculum> getCurriculums() {
-        ClientResponse clientResponse = HttpRequest.get("curriculum/");
-            ArrayList<Curriculum> curriculums = null;
+    public static ArrayList<Curriculum> getCurriculums() {
+        ClientResponse clientResponse = HttpRequest.get("/curriculum");
+        ArrayList<Curriculum> curriculums = null;
 
         if (clientResponse == null) {
             System.out.println("No sdk");
@@ -90,4 +90,27 @@ public class Connection {
         }
         return curriculums;
     }
+
+    public static ArrayList<Book> getCurriculumBooks(int curriculumId) {
+        ClientResponse clientResponse = HttpRequest.get("/curriculum/" + curriculumId + "/books");
+        ArrayList<Book> books = null;
+
+        if (clientResponse == null) {
+            System.out.println("No sdk");
+        } else {
+            String encryptedJson = clientResponse.getEntity(String.class);
+            if (clientResponse.getStatus() == 200) {
+                String decryptedJson = Cryptor.encryptDecryptXOR(encryptedJson);
+                books = new Gson().fromJson(decryptedJson, new TypeToken<ArrayList<Book>>() {
+                }.getType());
+            } else {
+                System.out.println("Server error");
+            }
+        }
+        return books;
+    }
+
+
+
+
 }
