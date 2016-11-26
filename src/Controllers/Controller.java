@@ -126,6 +126,7 @@ public class Controller {
         Scanner input2 = new Scanner(System.in);
         ArrayList<Book> books = Connection.getBooks();
         ArrayList<Book> foundBooks = new ArrayList<>();
+        boolean check = false;
 
         System.out.println("Indtast navn på den ønskede bog");
         String searchTitle = input2.nextLine();
@@ -134,10 +135,13 @@ public class Controller {
             for (Book book : books) {
                 if (book.getTitle() != null && book.getTitle().toLowerCase().contains(searchTitle.toLowerCase())) {
                     foundBooks.add(book);
+                    check = true;
                     System.out.println(foundBooks.indexOf(book) + ". " + book.getTitle());
                 }
+
             }
-            System.out.println("Indtast nummer på bog, som du ønsker info på?");
+
+             System.out.println("Indtast nummer på bog, som du ønsker info på?");
             int foundBook = input2.nextInt();
             Book book = foundBooks.get(foundBook);
             System.out.println("Title: " + book.getTitle() + "\n" + "Author(s): " + book.getAuthor() + "\n" + "Version: " + book.getVersion()
@@ -145,6 +149,7 @@ public class Controller {
                     + "\n" + "Pris på CDON: " + book.getPriceCDON() + "\n" + "Pris på SAXO: " + book.getPriceSAXO() + "\n" );
 
         } catch (InputMismatchException e) {
+            check = true;
             System.out.println("Indtast venligt et tal?");
             input.next();
 
