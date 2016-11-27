@@ -110,7 +110,4 @@ public class Connection {
         return books;
     }
 
-
-
-
 }

@@ -71,10 +71,10 @@ public class Controller {
     public void mainMenu() {
 
         String username, password;
-        System.out.println("Login");
-        System.out.println("Indtast brugernavn");
+        System.out.println("-_Login_-");
+        System.out.println("Indtast brugernavn:");
         username = input.nextLine();
-        System.out.println("Indtast kodeord");
+        System.out.println("Indtast kodeord:");
         password = input.nextLine();
 
         String token = Connection.authorizeLogin(username, password);
@@ -83,9 +83,9 @@ public class Controller {
                 try {
                     System.out.println("");
                     System.out.println("Book & Curriculum service");
-                    System.out.println("1. Print alle bøger");
-                    System.out.println("2. Print en bog med unikke oplysninger og priser");
-                    System.out.println("3. Print et pensum");
+                    System.out.println("1. Se alle bøger");
+                    System.out.println("2. Find en bog med unikke oplysninger og priser");
+                    System.out.println("3. Visning af pensumlister");
                     System.out.println("4. Ændre i personlige brugeroplysninger");
                     System.out.println("5. Slet bruger");
                     System.out.println("6. Log ud");
@@ -192,8 +192,11 @@ public class Controller {
 
             ArrayList<Book> curriculumBooks = Connection.getCurriculumBooks(searchCurriculum);
 
+             System.out.println("De følgende bøger skal bruges på det valgte semester: \n(Info på den enkelte bog kan findes i hovedmenuen) \n");
+
             for (Book book : curriculumBooks) {
-                System.out.println(book.getTitle() + " " + book.getISBN());
+                System.out.println(book.getTitle() + " - ISBN Nummer: " + book.getISBN());
+
             }
 
 
