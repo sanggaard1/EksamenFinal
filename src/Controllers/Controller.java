@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
 /**
@@ -21,7 +22,6 @@ public class Controller {
         input = new Scanner(System.in);
     }
 
-    // Første menu brugeren møder
     public void preMenu() {
 
         Scanner input = new Scanner(System.in);
@@ -60,18 +60,46 @@ public class Controller {
     }
 
 
-
     public void createUser() {
-        System.out.println("Not implementet");
-    }
 
+        String newUsername;
+        String newPassword;
+        boolean existingUser = false;
+
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Indtast ønsket brugernavn: ");
+        newUsername = input.nextLine();
+        System.out.print("Indtast ønsket password: ");
+        newPassword = input.nextLine();
+/*
+        for (User user : userDatabase.getUsers()) {
+            if (newUsername.equalsIgnoreCase(user.getUsername())) {
+                existingUser = true;
+                break;
+            }
+        }
+
+        if (existingUser) {
+            System.out.println("Dette brugernavn eksisterer allerede. Prøv igen");
+        } else {
+            User newUser = new User(newUsername, newPassword, 0);
+            userDatabase.getUsers().add(newUser);
+            System.out.println("Bruger " + newUsername + " er nu oprettet");
+        }
+
+        System.out.println("Not implementet");
+*/
+
+
+    }
 
 
     // Menu der møder bruger - efter man er logget ind med gyldigt username og password
     public void mainMenu() {
 
         String username, password;
-        System.out.println("-_Login_-");
+        System.out.println("___Login___ ");
         System.out.println("Indtast brugernavn:");
         username = input.nextLine();
         System.out.println("Indtast kodeord:");
@@ -107,7 +135,7 @@ public class Controller {
                             break;
                         case 6:
                             System.out.println(" Du logges ud - Tak for i dag  ");
-                            System.exit(0);
+                            preMenu();
                             break;
                         default:
                             System.out.println("Du tastede forkert - prøv igen.");
@@ -146,26 +174,20 @@ public class Controller {
                     System.out.println(foundBooks.indexOf(book) + ". " + book.getTitle());
                 }
             }
-            } catch (InputMismatchException e) {
-                System.out.println("Indtast venligt et tal?");
-                input.next();
-
-
-            }
-             System.out.println("Indtast nummer på bog, som du ønsker info på?");
-            int foundBook = input2.nextInt();
-            Book book = foundBooks.get(foundBook);
-            System.out.println("Title: " + book.getTitle() + "\n" + "Author(s): " + book.getAuthor() + "\n" + "Version: " + book.getVersion()
-                    + "\n" + "ISBN/Stregkode Nr.: " + book.getISBN() + "\n" + "Forlag: " + book.getPublisher() + "\n" + "Pris på AB: " + book.getPriceAB()
-                    + "\n" + "Pris på CDON: " + book.getPriceCDON() + "\n" + "Pris på SAXO: " + book.getPriceSAXO() + "\n" );
-
-/*
         } catch (InputMismatchException e) {
-            check = true;
-            System.out.println("Indtast venligt et tal?");
+            System.out.println("Indtast venligst et tal?");
             input.next();
-*/
+
+
         }
+        System.out.println("Indtast nummer på bog, som du ønsker info på?");
+        int foundBook = input2.nextInt();
+        Book book = foundBooks.get(foundBook);
+        System.out.println("Title: " + book.getTitle() + "\n" + "Author(s): " + book.getAuthor() + "\n" + "Version: " + book.getVersion()
+                + "\n" + "ISBN/Stregkode Nr.: " + book.getISBN() + "\n" + "Forlag: " + book.getPublisher() + "\n" + "Pris på AB: " + book.getPriceAB()
+                + "\n" + "Pris på CDON: " + book.getPriceCDON() + "\n" + "Pris på SAXO: " + book.getPriceSAXO() + "\n");
+
+    }
 
     public void printCurriculum() {
         Scanner input = new Scanner(System.in);
@@ -173,12 +195,12 @@ public class Controller {
         ArrayList<Curriculum> foundCurriculumBooks = new ArrayList<>();
 
         System.out.println("Her er alle pensumlisterne - Du kan få vist bøgerne på semesteret ved at indtaste det unikke ID:");
-            for (Curriculum curriculum : curriculums) {
-                System.out.println("ID: " + curriculum.getCurriculumID() + " - " + curriculum.getSchool() + " " + curriculum.getSemester() + ". Semester  " + curriculum.getEducation());
-            }
+        for (Curriculum curriculum : curriculums) {
+            System.out.println("ID: " + curriculum.getCurriculumID() + " - " + curriculum.getSchool() + " " + curriculum.getSemester() + ". Semester  " + curriculum.getEducation());
+        }
 
 
-            int searchCurriculum;
+        int searchCurriculum;
         do {
 
             System.out.println("Indtast ID for Semester: ");
@@ -190,21 +212,16 @@ public class Controller {
 
         } while (searchCurriculum <= 0 || searchCurriculum > curriculums.size());
 
-            ArrayList<Book> curriculumBooks = Connection.getCurriculumBooks(searchCurriculum);
+        ArrayList<Book> curriculumBooks = Connection.getCurriculumBooks(searchCurriculum);
 
-             System.out.println("De følgende bøger skal bruges på det valgte semester: \n(Info på den enkelte bog kan findes i hovedmenuen) \n");
+        System.out.println("De følgende bøger skal bruges på det valgte semester: \n(Info på den enkelte bog kan findes i hovedmenuen) \n");
 
-            for (Book book : curriculumBooks) {
-                System.out.println(book.getTitle() + " - ISBN Nummer: " + book.getISBN());
-
-            }
-
+        for (Book book : curriculumBooks) {
+            System.out.println(book.getTitle() + " - ISBN Nummer: " + book.getISBN());
 
         }
 
-
-
-
+    }
 
     public void changeUser() {
         System.out.println("Not implementet");

@@ -27,7 +27,7 @@ public class Connection {
             if (clientResponse.getStatus() == 200) {
                 token = json;
             } else {
-                System.out.println("Better luck next time");
+                System.out.println("Not working");
             }
         }
         return token;
@@ -47,7 +47,7 @@ public class Connection {
                 books = new Gson().fromJson(decryptedJson, new TypeToken<ArrayList<Book>>() {
                 }.getType());
             } else {
-                System.out.println("Server error");
+                System.out.println("Error");
             }
         }
         return books;
@@ -66,7 +66,7 @@ public class Connection {
                 String decryptedJson = Cryptor.encryptDecryptXOR(encryptedJson);
                 book = new Gson().fromJson(decryptedJson, Book.class);
             } else {
-                System.out.println("Server error");
+                System.out.println("Error");
             }
         }
         return book;
@@ -85,7 +85,7 @@ public class Connection {
                 curriculums = new Gson().fromJson(decryptedJson, new TypeToken<ArrayList<Curriculum>>() {
                 }.getType());
             } else {
-                System.out.println("Server error");
+                System.out.println("Error");
             }
         }
         return curriculums;
@@ -104,7 +104,7 @@ public class Connection {
                 books = new Gson().fromJson(decryptedJson, new TypeToken<ArrayList<Book>>() {
                 }.getType());
             } else {
-                System.out.println("Server error");
+                System.out.println("Error");
             }
         }
         return books;
