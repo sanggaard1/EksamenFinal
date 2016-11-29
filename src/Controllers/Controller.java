@@ -56,11 +56,12 @@ public class Controller {
                 input.next();
             }
         } while (true);
-
     }
 
 
     public void createUser() {
+
+
 
         String newUsername;
         String newPassword;
@@ -72,7 +73,8 @@ public class Controller {
         newUsername = input.nextLine();
         System.out.print("Indtast ønsket password: ");
         newPassword = input.nextLine();
-/*
+
+        /*
         for (User user : userDatabase.getUsers()) {
             if (newUsername.equalsIgnoreCase(user.getUsername())) {
                 existingUser = true;
@@ -146,9 +148,7 @@ public class Controller {
                     input.next();
                 }
             } while (true);
-
         }
-
     }
 
     public void printBooks() {
@@ -192,13 +192,11 @@ public class Controller {
     public void printCurriculum() {
         Scanner input = new Scanner(System.in);
         ArrayList<Curriculum> curriculums = Connection.getCurriculums();
-        ArrayList<Curriculum> foundCurriculumBooks = new ArrayList<>();
 
         System.out.println("Her er alle pensumlisterne - Du kan få vist bøgerne på semesteret ved at indtaste det unikke ID:");
         for (Curriculum curriculum : curriculums) {
             System.out.println("ID: " + curriculum.getCurriculumID() + " - " + curriculum.getSchool() + " " + curriculum.getSemester() + ". Semester  " + curriculum.getEducation());
         }
-
 
         int searchCurriculum;
         do {
@@ -218,9 +216,7 @@ public class Controller {
 
         for (Book book : curriculumBooks) {
             System.out.println(book.getTitle() + " - ISBN Nummer: " + book.getISBN());
-
         }
-
     }
 
     public void changeUser() {

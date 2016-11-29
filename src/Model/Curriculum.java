@@ -13,7 +13,7 @@ public class Curriculum {
     public Curriculum() {
 
     }
-    //Constructor
+    //Constructor - Så kan man få både med og uden ID
     public Curriculum(String school, String education, int semester, int curriculumID) {
         this.school = school;
         this.education = education;

@@ -17,7 +17,7 @@ public class Connection {
 
     public static String authorizeLogin(String username, String password) {
         UserLogin userLogin = new UserLogin(username, password);
-        ClientResponse clientResponse = HttpRequest.post(null, "/user/login", new Gson().toJson(userLogin));
+        ClientResponse clientResponse = HttpRequest.post(null, "/user/login", Cryptor.encryptDecryptXOR(new Gson().toJson(userLogin)));
         String token = null;
 
         if (clientResponse == null) {
