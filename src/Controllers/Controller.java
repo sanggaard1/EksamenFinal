@@ -5,6 +5,7 @@ import Model.User;
 import Model.Curriculum;
 import SDK.Connection;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -62,18 +63,28 @@ public class Controller {
     public void createUser() {
 
 
-
-        String newUsername;
-        String newPassword;
-        boolean existingUser = false;
+        JsonObject data = new JsonObject();
 
         Scanner input = new Scanner(System.in);
 
-        System.out.print("Indtast ønsket brugernavn: ");
-        newUsername = input.nextLine();
-        System.out.print("Indtast ønsket password: ");
-        newPassword = input.nextLine();
+        System.out.print("Indtast ønsket brugernavn:");
+        data.addProperty("firstName", input.nextLine());
 
+        System.out.print("Indtast ønsket password:");
+        data.addProperty("lastName", input.nextLine());
+
+        System.out.print("Indtast ønsket password:");
+        data.addProperty("email", input.nextLine());
+
+        System.out.print("Indtast ønsket password:");
+        data.addProperty("userName", input.nextLine());
+
+        System.out.print("Indtast ønsket password:");
+        data.addProperty("password", input.nextLine());
+
+        data.addProperty("userType", "0");
+
+        Connection.postUser(data);
         /*
         for (User user : userDatabase.getUsers()) {
             if (newUsername.equalsIgnoreCase(user.getUsername())) {

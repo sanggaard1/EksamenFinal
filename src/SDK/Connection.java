@@ -1,13 +1,15 @@
 package SDK;
 
 import Encrypters.Cryptor;
+import Model.*;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.sun.jersey.api.client.ClientResponse;
-import Model.Book;
-import Model.UserLogin;
-import Model.Curriculum;
+import org.json.simple.JSONObject;
 
+import javax.ws.rs.client.Entity;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 /**
@@ -17,12 +19,13 @@ public class Connection {
 
     public static String authorizeLogin(String username, String password) {
         UserLogin userLogin = new UserLogin(username, password);
-        ClientResponse clientResponse = HttpRequest.post(null, "/user/login", Cryptor.encryptDecryptXOR(new Gson().toJson(userLogin)));
+        ClientResponse clientResponse = HttpRequest.post("/user/login", Cryptor.encryptDecryptXOR(new Gson().toJson(userLogin)));
         String token = null;
 
         if (clientResponse == null) {
             System.out.println("no connection to server");
         } else {
+
             String json = clientResponse.getEntity(String.class);
             if (clientResponse.getStatus() == 200) {
                 token = json;
@@ -30,6 +33,7 @@ public class Connection {
                 System.out.println("Not working");
             }
         }
+        clientResponse.close();
         return token;
     }
 
@@ -50,6 +54,7 @@ public class Connection {
                 System.out.println("Error");
             }
         }
+        clientResponse.close();
         return books;
     }
 
@@ -69,6 +74,7 @@ public class Connection {
                 System.out.println("Error");
             }
         }
+        clientResponse.close();
         return book;
     }
 
@@ -88,6 +94,7 @@ public class Connection {
                 System.out.println("Error");
             }
         }
+        clientResponse.close();
         return curriculums;
     }
 
@@ -107,7 +114,28 @@ public class Connection {
                 System.out.println("Error");
             }
         }
+        clientResponse.close();
         return books;
+    }
+
+
+    public static String postUser(JsonObject data) {
+        ClientResponse clientResponse = HttpRequest.post("/user/", Cryptor.encryptDecryptXOR(new Gson().toJson(data)));
+
+        String response = null;
+
+        if (clientResponse == null) {
+            System.out.println("No sdk");
+        } else {
+            response = clientResponse.getEntity(String.class);
+            if (clientResponse.getStatus() == 200) {
+                System.out.println(response);
+            } else {
+                System.out.println("Error");
+            }
+        }
+        clientResponse.close();
+        return response;
     }
 
 }

@@ -1,5 +1,7 @@
 package SDK;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.sun.jersey.api.client.*;
 
 /**
@@ -30,7 +32,7 @@ public class HttpRequest {
         return clientResponse;
     }
 
-    public static ClientResponse post(String token, String path, String json) {
+    public static ClientResponse post(String path, String data) {
         ClientResponse clientResponse = null;
         try {
             WebResource webResource = client
@@ -38,7 +40,7 @@ public class HttpRequest {
 
                     .path(path); //book
 
-            clientResponse = webResource.accept("application/json").post(ClientResponse.class, json);
+            clientResponse = webResource.accept("application/json").post(ClientResponse.class, data);
 
         } catch (UniformInterfaceException | ClientHandlerException e) {
             e.printStackTrace();
