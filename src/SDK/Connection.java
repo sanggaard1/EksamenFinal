@@ -6,6 +6,7 @@ import Model.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import com.sun.deploy.net.HttpResponse;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.tools.internal.ws.wsdl.document.jaxws.Exception;
 import org.json.simple.JSONObject;
@@ -21,9 +22,9 @@ public class Connection {
 
     // Login request
     public static String authorizeLogin(String username, String password) {
-        String  enrPassowrd = Cryptor.encryptDecryptXOR(password);
+        String enrPassowrd = Cryptor.encryptDecryptXOR(password);
         UserLogin userLogin = new UserLogin(username, password);
-      //  System.out.println(Cryptor.encryptDecryptXOR(new Gson().toJson(userLogin)));
+        //  System.out.println(Cryptor.encryptDecryptXOR(new Gson().toJson(userLogin)));
 
         ClientResponse clientResponse = HttpRequest.post("/user/login", Cryptor.encryptDecryptXOR(new Gson().toJson(userLogin)));
         String token = null;
@@ -147,22 +148,25 @@ public class Connection {
     }
 
     //Update User
-    public static String putUser(String token,JsonObject data, int userID) {
+    public static String putUser(String token, JsonObject data, int userID) {
 
-        ClientResponse clientResponse = HttpRequest.put("/user/" + userID,token+ Cryptor.encryptDecryptXOR(new Gson().toJson(data)));
+        ArrayList<String> info = new ArrayList<>();
+        info.add("authorization");
+        info.add(token);
+        ClientResponse clientResponse = HttpRequest.put("/user/" + userID, Cryptor.encryptDecryptXOR(new Gson().toJson(data)), info);
         System.out.println(clientResponse.toString());
         String response = null;
 
-    if (clientResponse == null) {
-        System.out.println("No sdk");
-    } else {
-        response = clientResponse.getEntity(String.class);
-        if (clientResponse.getStatus() == 200) {
-            System.out.println(response);
+        if (clientResponse == null) {
+            System.out.println("No sdk");
         } else {
-            System.out.println("Error");
+            response = clientResponse.getEntity(String.class);
+            if (clientResponse.getStatus() == 200) {
+                System.out.println(response);
+            } else {
+                System.out.println("Error");
+            }
         }
-    }
 
 
         clientResponse.close();
@@ -170,7 +174,30 @@ public class Connection {
 
     }
 
-    //Delete User
+    public static String deleteUser(String token, JsonObject data, int userID) {
+
+        ArrayList<String> info = new ArrayList<>();
+        info.add("authorization");
+        info.add(token);
+        ClientResponse clientResponse = HttpRequest.delete("/user/" + userID, Cryptor.encryptDecryptXOR(new Gson().toJson(data)), info);
+        System.out.println(clientResponse.toString());
+        String response = null;
+
+        if (clientResponse == null) {
+            System.out.println("No sdk");
+        } else {
+            response = clientResponse.getEntity(String.class);
+            if (clientResponse.getStatus() == 200) {
+                System.out.println(response);
+            } else {
+                System.out.println("Error");
+            }
+
+        }
+        clientResponse.close();
+        return response;
+
+    }
 
 
     // Logout

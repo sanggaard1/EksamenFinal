@@ -4,6 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.sun.jersey.api.client.*;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 /**
  * Created by Sanggaard on 24/11/2016.
  */
@@ -48,15 +51,18 @@ public class HttpRequest {
         return clientResponse;
     }
 
-    public static ClientResponse put(String path, String data) {
+    public static ClientResponse put(String path, String data,ArrayList<String> headerinfo) {
         ClientResponse clientResponse = null;
         try {
             WebResource webResource = client
+
                     .resource("http://localhost:8080/server2_0_war_exploded")
 
                     .path(path); //book
 
-            clientResponse = webResource.accept("application/json").put(ClientResponse.class, data);
+            clientResponse = webResource.accept("application/json").header(headerinfo.get(0),headerinfo.get(1)).put(ClientResponse.class, data);
+            System.out.println(headerinfo.get(0)+"--"+headerinfo.get(1));//this line exceutes no error
+
 
         } catch (UniformInterfaceException | ClientHandlerException e) {
             e.printStackTrace();
@@ -64,4 +70,24 @@ public class HttpRequest {
         return clientResponse;
     }
 
-}
+    public static ClientResponse delete(String path, String data, ArrayList<String> headerinfo){
+        ClientResponse clientResponse = null;
+        try {
+            WebResource webResource = client
+
+                    .resource("http://localhost:8080/server2_0_war_exploded")
+
+                    .path(path);
+            clientResponse = webResource.accept("application/json").header(headerinfo.get(0),headerinfo.get(1)).delete(ClientResponse.class);
+            System.out.println(headerinfo.get(0)+"--"+headerinfo.get(1));//this line exceutes no error
+
+
+        } catch (UniformInterfaceException | ClientHandlerException e) {
+            e.printStackTrace();
+        }
+        return clientResponse;
+        }
+
+
+    }
+

@@ -102,15 +102,17 @@ public class Controller {
         password = input.nextLine();
 
         String token = Connection.authorizeLogin(username, password);
-    tokenId = token;
+
         JsonParser parse = new JsonParser();
 
         JsonArray testm = (JsonArray) parse.parse(token);
         JsonObject user = (JsonObject) testm.get(0);
         userID = user.get("userID").getAsInt();
+       System.out.println(testm.get(1));
+        String temp=testm.get(1).toString();
+        tokenId = temp.substring(1,temp.length()-1);
 
-
-        System.out.println(testm.get(0));
+//        System.out.println(testm.get(0));
         System.out.println(user.get("userType"));
         System.out.println(user.get("userID"));
 
@@ -253,14 +255,19 @@ public class Controller {
         data.addProperty("password", input.nextLine());
 
         data.addProperty("userType", "0");
-
+        System.out.println(data);
         Connection.putUser(tokenId,data, userID);
+
+        System.out.println("Bruger nu ændret");
 
         mainMenu();
     }
 
     public void deleteUser() {
-        System.out.println("Not implementet");
+        Connection.deleteUser(tokenId, new JsonObject(),userID);
+        System.out.println("User now deleted");
+
+        mainMenu();
 
     }
 
