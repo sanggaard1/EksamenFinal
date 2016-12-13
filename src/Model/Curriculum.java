@@ -19,11 +19,7 @@ public class Curriculum {
         this.education = education;
         this.semester = semester;
         this.curriculumID = curriculumID;
-    }
-    public Curriculum(String school, String education, int semester) {
-        this.school = school;
-        this.education = education;
-        this.semester = semester;
+
     }
 
     public String getSchool() {

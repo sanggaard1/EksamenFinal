@@ -1,11 +1,13 @@
 package SDK;
 
 import Encrypters.Cryptor;
+import Model.User;
 import Model.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.sun.jersey.api.client.ClientResponse;
+import com.sun.tools.internal.ws.wsdl.document.jaxws.Exception;
 import org.json.simple.JSONObject;
 
 import javax.ws.rs.client.Entity;
@@ -17,8 +19,12 @@ import java.util.ArrayList;
  */
 public class Connection {
 
+    // Login request
     public static String authorizeLogin(String username, String password) {
+        String  enrPassowrd = Cryptor.encryptDecryptXOR(password);
         UserLogin userLogin = new UserLogin(username, password);
+      //  System.out.println(Cryptor.encryptDecryptXOR(new Gson().toJson(userLogin)));
+
         ClientResponse clientResponse = HttpRequest.post("/user/login", Cryptor.encryptDecryptXOR(new Gson().toJson(userLogin)));
         String token = null;
 
@@ -37,7 +43,7 @@ public class Connection {
         return token;
     }
 
-    //hent alle bøger
+    //getting all books
     public static ArrayList<Book> getBooks() {
         ClientResponse clientResponse = HttpRequest.get("/book");
         ArrayList<Book> books = null;
@@ -58,7 +64,7 @@ public class Connection {
         return books;
     }
 
-    // hent en bog
+    // getting a specific book
     public static Book getBook(int id) {
         ClientResponse clientResponse = HttpRequest.get("/book" + id);
         Book book = null;
@@ -78,6 +84,7 @@ public class Connection {
         return book;
     }
 
+    // getting all stored curriculums
     public static ArrayList<Curriculum> getCurriculums() {
         ClientResponse clientResponse = HttpRequest.get("/curriculum");
         ArrayList<Curriculum> curriculums = null;
@@ -98,6 +105,7 @@ public class Connection {
         return curriculums;
     }
 
+    // Get Books on specific curriculum
     public static ArrayList<Book> getCurriculumBooks(int curriculumId) {
         ClientResponse clientResponse = HttpRequest.get("/curriculum/" + curriculumId + "/books");
         ArrayList<Book> books = null;
@@ -118,7 +126,7 @@ public class Connection {
         return books;
     }
 
-
+    //Create User
     public static String postUser(JsonObject data) {
         ClientResponse clientResponse = HttpRequest.post("/user/", Cryptor.encryptDecryptXOR(new Gson().toJson(data)));
 
@@ -138,4 +146,34 @@ public class Connection {
         return response;
     }
 
+    //Update User
+    public static String putUser(String token,JsonObject data, int userID) {
+
+        ClientResponse clientResponse = HttpRequest.put("/user/" + userID,token+ Cryptor.encryptDecryptXOR(new Gson().toJson(data)));
+        System.out.println(clientResponse.toString());
+        String response = null;
+
+    if (clientResponse == null) {
+        System.out.println("No sdk");
+    } else {
+        response = clientResponse.getEntity(String.class);
+        if (clientResponse.getStatus() == 200) {
+            System.out.println(response);
+        } else {
+            System.out.println("Error");
+        }
+    }
+
+
+        clientResponse.close();
+        return response;
+
+    }
+
+    //Delete User
+
+
+    // Logout
+
 }
+

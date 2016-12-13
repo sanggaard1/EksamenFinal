@@ -3,21 +3,24 @@ package Controllers;
 import Model.Book;
 import Model.User;
 import Model.Curriculum;
+import Model.UserDTO;
 import SDK.Connection;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.ResourceBundle;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Created by Sanggaard on 24/11/2016.
  */
 public class Controller {
 
+    private int userID;
+
     Scanner input;
+    private String tokenId;
 
     public Controller() {
         input = new Scanner(System.in);
@@ -62,48 +65,28 @@ public class Controller {
 
     public void createUser() {
 
-
         JsonObject data = new JsonObject();
 
         Scanner input = new Scanner(System.in);
 
-        System.out.print("Indtast ønsket brugernavn:");
+        System.out.print("First name:");
         data.addProperty("firstName", input.nextLine());
 
-        System.out.print("Indtast ønsket password:");
+        System.out.print("Indtast dit efternavn:");
         data.addProperty("lastName", input.nextLine());
 
-        System.out.print("Indtast ønsket password:");
+        System.out.print("Indtast din email:");
         data.addProperty("email", input.nextLine());
 
-        System.out.print("Indtast ønsket password:");
+        System.out.print("Indtast ønsket brugernavn:");
         data.addProperty("userName", input.nextLine());
 
-        System.out.print("Indtast ønsket password:");
+        System.out.print("Indtast ønsket kodeord:");
         data.addProperty("password", input.nextLine());
 
         data.addProperty("userType", "0");
 
         Connection.postUser(data);
-        /*
-        for (User user : userDatabase.getUsers()) {
-            if (newUsername.equalsIgnoreCase(user.getUsername())) {
-                existingUser = true;
-                break;
-            }
-        }
-
-        if (existingUser) {
-            System.out.println("Dette brugernavn eksisterer allerede. Prøv igen");
-        } else {
-            User newUser = new User(newUsername, newPassword, 0);
-            userDatabase.getUsers().add(newUser);
-            System.out.println("Bruger " + newUsername + " er nu oprettet");
-        }
-
-        System.out.println("Not implementet");
-*/
-
 
     }
 
@@ -119,6 +102,21 @@ public class Controller {
         password = input.nextLine();
 
         String token = Connection.authorizeLogin(username, password);
+    tokenId = token;
+        JsonParser parse = new JsonParser();
+
+        JsonArray testm = (JsonArray) parse.parse(token);
+        JsonObject user = (JsonObject) testm.get(0);
+        userID = user.get("userID").getAsInt();
+
+
+        System.out.println(testm.get(0));
+        System.out.println(user.get("userType"));
+        System.out.println(user.get("userID"));
+
+        // System.out.println(testm.get(1));
+
+        System.out.println(token);
         if (token != null) {
             do {
                 try {
@@ -127,7 +125,7 @@ public class Controller {
                     System.out.println("1. Se alle bøger");
                     System.out.println("2. Find en bog med unikke oplysninger og priser");
                     System.out.println("3. Visning af pensumlister");
-                    System.out.println("4. Ændre i personlige brugeroplysninger");
+                    System.out.println("4. Change user info");
                     System.out.println("5. Slet bruger");
                     System.out.println("6. Log ud");
                     switch (input.nextInt()) {
@@ -231,8 +229,34 @@ public class Controller {
     }
 
     public void changeUser() {
-        System.out.println("Not implementet");
 
+        Scanner input = new Scanner(System.in);
+
+
+        System.out.println("Indtast i felter du ønsker at få ændret. Du kan undlade at udfylde parametre du ikke ønsker ændret");
+
+        JsonObject data = new JsonObject();
+
+        System.out.print("Indtast dit fornavn:");
+        data.addProperty("firstName", input.nextLine());
+
+        System.out.print("Indtast dit efternavn:");
+        data.addProperty("lastName", input.nextLine());
+
+        System.out.print("Indtast din email:");
+        data.addProperty("email", input.nextLine());
+
+        System.out.print("Indtast ønsket brugernavn:");
+        data.addProperty("userName", input.nextLine());
+
+        System.out.print("Indtast ønsket kodeord:");
+        data.addProperty("password", input.nextLine());
+
+        data.addProperty("userType", "0");
+
+        Connection.putUser(tokenId,data, userID);
+
+        mainMenu();
     }
 
     public void deleteUser() {

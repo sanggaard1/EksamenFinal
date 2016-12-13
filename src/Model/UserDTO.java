@@ -1,9 +1,11 @@
 package Model;
+import Controllers.Controller;
 
 /**
- * Created by Sanggaard on 24/11/2016.
+ * Created by Sanggaard on 01/12/2016.
  */
-public class User {
+public class UserDTO {
+
 
     int userID;
     String firstName;
@@ -13,11 +15,10 @@ public class User {
     String password;
     int userType;
 
-    public User(){
-
+    public UserDTO(){
     }
 
-    public User(int userID, String firstName, String lastName, String userName, String email, String password, int userType) {
+    public UserDTO(int userID, String firstName, String lastName, String userName, String email, String password, int userType) {
         this.userID = userID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -83,3 +84,4 @@ public class User {
         this.userType = userType;
     }
 }
+

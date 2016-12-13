@@ -28,17 +28,6 @@ public class Book {
         this.version = version;
     }
 
-    public Book(long ISBN, String publisher, String title, String author, double priceAB, double priceSAXO, double priceCDON, int version) {
-        this.ISBN = ISBN;
-        this.publisher = publisher;
-        this.title = title;
-        this.author = author;
-        this.priceAB = priceAB;
-        this.priceSAXO = priceSAXO;
-        this.priceCDON = priceCDON;
-        this.version = version;
-    }
-
     public int getBookID() {
         return bookID;
     }
