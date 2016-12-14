@@ -1,5 +1,6 @@
 package Controllers;
 
+import Encrypters.Digester;
 import Model.Book;
 import Model.User;
 import Model.Curriculum;
@@ -69,7 +70,7 @@ public class Controller {
 
         Scanner input = new Scanner(System.in);
 
-        System.out.print("First name:");
+        System.out.print("Indtast dit fornavn:");
         data.addProperty("firstName", input.nextLine());
 
         System.out.print("Indtast dit efternavn:");
@@ -82,24 +83,28 @@ public class Controller {
         data.addProperty("userName", input.nextLine());
 
         System.out.print("Indtast ønsket kodeord:");
-        data.addProperty("password", input.nextLine());
+        data.addProperty("password", Digester.hashWithSalt(input.nextLine()));
 
         data.addProperty("userType", "0");
 
         Connection.postUser(data);
 
+        System.out.println("Bruger er nu oprettet - Du kan nu logge ind med informationer");
+
     }
 
 
-    // Menu der møder bruger - efter man er logget ind med gyldigt username og password
+    // Menu der møder bruger - efter man ner logget ind med gyldigt username og password
     public void mainMenu() {
 
         String username, password;
+
         System.out.println("___Login___ ");
         System.out.println("Indtast brugernavn:");
-        username = input.nextLine();
+
+        username = input.next();
         System.out.println("Indtast kodeord:");
-        password = input.nextLine();
+        password = input.next();
 
         String token = Connection.authorizeLogin(username, password);
 
@@ -108,15 +113,10 @@ public class Controller {
         JsonArray testm = (JsonArray) parse.parse(token);
         JsonObject user = (JsonObject) testm.get(0);
         userID = user.get("userID").getAsInt();
-       System.out.println(testm.get(1));
+
         String temp=testm.get(1).toString();
         tokenId = temp.substring(1,temp.length()-1);
 
-//        System.out.println(testm.get(0));
-        System.out.println(user.get("userType"));
-        System.out.println(user.get("userID"));
-
-        // System.out.println(testm.get(1));
 
         System.out.println(token);
         if (token != null) {
@@ -127,7 +127,7 @@ public class Controller {
                     System.out.println("1. Se alle bøger");
                     System.out.println("2. Find en bog med unikke oplysninger og priser");
                     System.out.println("3. Visning af pensumlister");
-                    System.out.println("4. Change user info");
+                    System.out.println("4. Ændre bruger info");
                     System.out.println("5. Slet bruger");
                     System.out.println("6. Log ud");
                     switch (input.nextInt()) {
@@ -147,8 +147,7 @@ public class Controller {
                             deleteUser();
                             break;
                         case 6:
-                            System.out.println(" Du logges ud - Tak for i dag  ");
-                            preMenu();
+                            logout();
                             break;
                         default:
                             System.out.println("Du tastede forkert - prøv igen.");
@@ -255,20 +254,25 @@ public class Controller {
         data.addProperty("password", input.nextLine());
 
         data.addProperty("userType", "0");
-        System.out.println(data);
         Connection.putUser(tokenId,data, userID);
 
         System.out.println("Bruger nu ændret");
 
-        mainMenu();
+
     }
 
     public void deleteUser() {
         Connection.deleteUser(tokenId, new JsonObject(),userID);
         System.out.println("User now deleted");
 
-        mainMenu();
+        preMenu();
 
+    }
+
+    public void logout(){
+        Connection.logout(tokenId);
+
+        preMenu();
     }
 
 }

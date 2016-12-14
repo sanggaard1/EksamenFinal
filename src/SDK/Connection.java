@@ -1,6 +1,7 @@
 package SDK;
 
 import Encrypters.Cryptor;
+import Encrypters.Digester;
 import Model.User;
 import Model.*;
 import com.google.gson.Gson;
@@ -22,9 +23,8 @@ public class Connection {
 
     // Login request
     public static String authorizeLogin(String username, String password) {
-        String enrPassowrd = Cryptor.encryptDecryptXOR(password);
-        UserLogin userLogin = new UserLogin(username, password);
-        //  System.out.println(Cryptor.encryptDecryptXOR(new Gson().toJson(userLogin)));
+        String enrPassowrd = Digester.hashWithSalt(password);
+        UserLogin userLogin = new UserLogin(username, enrPassowrd);
 
         ClientResponse clientResponse = HttpRequest.post("/user/login", Cryptor.encryptDecryptXOR(new Gson().toJson(userLogin)));
         String token = null;
@@ -199,8 +199,52 @@ public class Connection {
 
     }
 
+    public static String logout(String token){
+
+            System.out.println(token);
+
+        ClientResponse clientResponse = HttpRequest.logout("/user/logout" ,Cryptor.encryptDecryptXOR(token) ); //not right
+
+        String response = null;
+
+        if (clientResponse == null) {
+            System.out.println("no sdk");
+        } else {
+
+            response = clientResponse.getEntity(String.class);
+            if (clientResponse.getStatus() == 200){
+                System.out.println(response);
+            } else {
+                System.out.println("Error");
+            }
+        }
+        clientResponse.close();
+        return response;
+
+
+    }
 
     // Logout
 
 }
 
+/*
+public static String postUser(JsonObject data) {
+        ClientResponse clientResponse = HttpRequest.post("/user/", Cryptor.encryptDecryptXOR(new Gson().toJson(data)));
+
+        String response = null;
+
+        if (clientResponse == null) {
+            System.out.println("No sdk");
+        } else {
+            response = clientResponse.getEntity(String.class);
+            if (clientResponse.getStatus() == 200) {
+                System.out.println(response);
+            } else {
+                System.out.println("Error");
+            }
+        }
+        clientResponse.close();
+        return response;
+
+*/
