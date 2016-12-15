@@ -4,7 +4,10 @@ import java.security.MessageDigest;
 
 /**
  * Created by Sanggaard on 24/11/2016.
+ *
+ * MD5 hashing klasse. Der tilføjes SALT på hash for øget sikkerhed
  */
+
 public class Digester {
 
     private final static String SALT = "82efbcc2cc33d33cdadf12806d75591a";

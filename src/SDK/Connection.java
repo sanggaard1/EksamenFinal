@@ -7,13 +7,7 @@ import Model.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import com.sun.deploy.net.HttpResponse;
 import com.sun.jersey.api.client.ClientResponse;
-import com.sun.tools.internal.ws.wsdl.document.jaxws.Exception;
-import org.json.simple.JSONObject;
-
-import javax.ws.rs.client.Entity;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 /**
@@ -154,7 +148,6 @@ public class Connection {
         info.add("authorization");
         info.add(token);
         ClientResponse clientResponse = HttpRequest.put("/user/" + userID, Cryptor.encryptDecryptXOR(new Gson().toJson(data)), info);
-        System.out.println(clientResponse.toString());
         String response = null;
 
         if (clientResponse == null) {
@@ -167,8 +160,6 @@ public class Connection {
                 System.out.println("Error");
             }
         }
-
-
         clientResponse.close();
         return response;
 
@@ -180,7 +171,6 @@ public class Connection {
         info.add("authorization");
         info.add(token);
         ClientResponse clientResponse = HttpRequest.delete("/user/" + userID, Cryptor.encryptDecryptXOR(new Gson().toJson(data)), info);
-        System.out.println(clientResponse.toString());
         String response = null;
 
         if (clientResponse == null) {
@@ -200,8 +190,6 @@ public class Connection {
     }
 
     public static String logout(String token){
-
-            System.out.println(token);
 
         ClientResponse clientResponse = HttpRequest.logout("/user/logout" ,Cryptor.encryptDecryptXOR(token) ); //not right
 
@@ -224,27 +212,6 @@ public class Connection {
 
     }
 
-    // Logout
+
 
 }
-
-/*
-public static String postUser(JsonObject data) {
-        ClientResponse clientResponse = HttpRequest.post("/user/", Cryptor.encryptDecryptXOR(new Gson().toJson(data)));
-
-        String response = null;
-
-        if (clientResponse == null) {
-            System.out.println("No sdk");
-        } else {
-            response = clientResponse.getEntity(String.class);
-            if (clientResponse.getStatus() == 200) {
-                System.out.println(response);
-            } else {
-                System.out.println("Error");
-            }
-        }
-        clientResponse.close();
-        return response;
-
-*/

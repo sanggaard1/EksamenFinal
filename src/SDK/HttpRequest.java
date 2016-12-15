@@ -1,11 +1,8 @@
 package SDK;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.sun.jersey.api.client.*;
-
 import java.util.ArrayList;
-import java.util.Map;
+
 
 /**
  * Created by Sanggaard on 24/11/2016.
@@ -35,7 +32,7 @@ public class HttpRequest {
         }
         return clientResponse;
     }
-
+    // Post http request. Sender data objekt, der indeholder bruger information
     public static ClientResponse post(String path, String data) {
         ClientResponse clientResponse = null;
         try {
@@ -51,7 +48,7 @@ public class HttpRequest {
         }
         return clientResponse;
     }
-
+    // Put http request - Data objekt og headerinfo sendes
     public static ClientResponse put(String path, String data, ArrayList<String> headerinfo) {
         ClientResponse clientResponse = null;
         try {
@@ -70,7 +67,7 @@ public class HttpRequest {
         }
         return clientResponse;
     }
-
+    // Delete http request
     public static ClientResponse delete(String path, String data, ArrayList<String> headerinfo) {
         ClientResponse clientResponse = null;
         try {
@@ -88,7 +85,7 @@ public class HttpRequest {
         }
         return clientResponse;
     }
-
+    // Logout - sletter token på serveren
     public static ClientResponse logout(String path, String data) {
         ClientResponse clientResponse = null;
         try {

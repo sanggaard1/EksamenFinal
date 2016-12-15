@@ -2,11 +2,8 @@ package Controllers;
 
 import Encrypters.Digester;
 import Model.Book;
-import Model.User;
 import Model.Curriculum;
-import Model.UserDTO;
 import SDK.Connection;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -63,7 +60,7 @@ public class Controller {
         } while (true);
     }
 
-
+    // Opret bruger
     public void createUser() {
 
         JsonObject data = new JsonObject();
@@ -98,18 +95,16 @@ public class Controller {
     public void mainMenu() {
 
         String username, password;
-
         System.out.println("___Login___ ");
         System.out.println("Indtast brugernavn:");
-
         username = input.next();
         System.out.println("Indtast kodeord:");
         password = input.next();
 
         String token = Connection.authorizeLogin(username, password);
-
         JsonParser parse = new JsonParser();
 
+        // Henter userID og Token, der man bruges til at opdatere den rette bruger i PUT.
         JsonArray testm = (JsonArray) parse.parse(token);
         JsonObject user = (JsonObject) testm.get(0);
         userID = user.get("userID").getAsInt();
@@ -160,7 +155,7 @@ public class Controller {
             } while (true);
         }
     }
-
+    // Printer alle bøger i databasen
     public void printBooks() {
         ArrayList<Book> books = Connection.getBooks();
         System.out.println("Her er alle bøgerne:");
@@ -168,7 +163,7 @@ public class Controller {
             System.out.println("Bog - ID: " + book.getBookID() + " - Titlen: " + book.getTitle());
         }
     }
-
+    // Søge funktion til print
     public void printBook() {
         Scanner input2 = new Scanner(System.in);
         ArrayList<Book> books = Connection.getBooks();
@@ -198,7 +193,7 @@ public class Controller {
                 + "\n" + "Pris på CDON: " + book.getPriceCDON() + "\n" + "Pris på SAXO: " + book.getPriceSAXO() + "\n");
 
     }
-
+    // Printer alle pensumlister - indeksere dem og tager user-input
     public void printCurriculum() {
         Scanner input = new Scanner(System.in);
         ArrayList<Curriculum> curriculums = Connection.getCurriculums();
@@ -228,7 +223,7 @@ public class Controller {
             System.out.println(book.getTitle() + " - ISBN Nummer: " + book.getISBN());
         }
     }
-
+    // Ændre bruger metode - bruger HTTP Put i httprequest
     public void changeUser() {
 
         Scanner input = new Scanner(System.in);
@@ -260,7 +255,7 @@ public class Controller {
 
 
     }
-
+    // Soft State delete of user - Sletter token
     public void deleteUser() {
         Connection.deleteUser(tokenId, new JsonObject(),userID);
         System.out.println("User now deleted");
@@ -268,7 +263,7 @@ public class Controller {
         preMenu();
 
     }
-
+    // logout - sletter token
     public void logout(){
         Connection.logout(tokenId);
 
